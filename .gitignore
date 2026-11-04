@@ -1,0 +1,12 @@
+# Licensed fonts: internal Cellcom use only, not distributed via git
+*.otf
+*.ttf
+*.woff
+*.woff2
+# Local environments and models created by setup.sh
+.venv/
+**/tools/flux-venv/
+**/tools/realesrgan/
+**/tools/hf/
+**/tools/uv/
+.DS_Store

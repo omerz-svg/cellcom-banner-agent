@@ -1,0 +1,7 @@
+{
+  "name": "cellcom-banner-agent",
+  "version": "1.0.0",
+  "description": "סוכן הבאנרים של סלקום: מעצב באנרים לאתר ישירות בפיגמה מתוך הטמפלייטים של מערכת העיצוב, בשפה של סלקום, עם תמונות AI מוטמעות (Figma AI, Magnific) ובדיקת איכות.",
+  "author": { "name": "Omer Ziv" },
+  "keywords": ["cellcom", "banners", "figma", "hebrew", "rtl"]
+}
