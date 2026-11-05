@@ -6,6 +6,7 @@ set -euo pipefail
 REPO="${0:A:h}"
 LIVE_SKILL="$HOME/.claude/skills/cellcom-banners"
 LIVE_AGENT="$HOME/.claude/agents/cellcom-banner-agent.md"
+LIVE_EXPORT_SKILL="$HOME/.claude/skills/export-campaign-images"
 DEST="$REPO/cellcom-banner-agent"
 MSG="${1:-Sync banner agent from ~/.claude ($(date +%F))}"
 
@@ -18,9 +19,18 @@ rsync -a --delete \
   "$LIVE_SKILL/" "$DEST/skills/cellcom-banners/"
 cp "$LIVE_AGENT" "$DEST/agents/cellcom-banner-agent.md"
 
+# Export skill: SKILL.md and the optimizer script.
+rsync -a --delete \
+  --include='/SKILL.md' --include='/scripts/' --include='/scripts/*.py' \
+  --exclude='*' \
+  "$LIVE_EXPORT_SKILL/" "$DEST/skills/export-campaign-images/"
+
 # Keep paths portable inside the plugin.
 find "$DEST" -type f \( -name '*.md' -o -name '*.sh' -o -name '*.js' -o -name '*.py' \) -print0 |
-  xargs -0 sed -i '' -e 's#~/\.claude/skills/cellcom-banners#<skill-dir>#g' -e "s#$HOME/\.claude/skills/cellcom-banners#<skill-dir>#g"
+  xargs -0 sed -i '' \
+    -e 's#~/\.claude/skills/cellcom-banners#<skill-dir>#g' -e "s#$HOME/\.claude/skills/cellcom-banners#<skill-dir>#g" \
+    -e 's#~/\.claude/skills/export-campaign-images#<skill-dir>#g' -e "s#$HOME/\.claude/skills/export-campaign-images#<skill-dir>#g" \
+    -e "s#$HOME/Desktop#~/Desktop#g"
 
 cd "$REPO"
 git add -A
